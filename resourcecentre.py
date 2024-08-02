@@ -1,6 +1,4 @@
-
-from Inventory.inventory import Inventory
-
+from inventory.inventory import Inventory
 class ResourceCenter:
     def __init__(self):
         ## Prepare the data (Inventory list)
@@ -10,7 +8,7 @@ class ResourceCenter:
         choice = -1
         while not 1 <= choice <= 5:
             print("\n==============================================")
-            print('RESOURCE CENTRE SYSTEM By Thaqif:')
+            print('RESOURCE CENTRE SYSTEM:')
             print("1. Add item")
             print("2. Display Inventory")
             print("3. Loan item")
@@ -23,22 +21,15 @@ class ResourceCenter:
 
     def main(self):
         # Refactor (A): Extract constants for choice integers
-        CHOICE_ADD = 1
-        CHOICE_VIEW = 2
-        CHOICE_LOAN = 3
-        CHOICE_RETURN = 4
-        CHOICE_QUIT = 5
         # Refactor (A): Extract constants for option integers
-        OPTION_CAMERA = 1
-        OPTION_LAPTOP = 2
 
         #### Menu driven application ####
         # Display menu and obtain menu choices
         choice = self.display_menu()
 
-        while choice != CHOICE_QUIT:
+        while choice != 5:
 
-            if choice == CHOICE_ADD:
+            if choice == 1:
                 # Refactor (B): use printHeader(mesage)
                 print("")
                 print("==============================================")
@@ -52,42 +43,42 @@ class ResourceCenter:
                 print("1. Digital Camera")
                 print("2. Laptop")
                 option = int(input("Enter option to select item type >"))
-                if option == OPTION_CAMERA:
+
+                # TO-DO: Write the code to ADD a camcorder or chrome book.
+                if option == 1:
                     assetTag = input("Enter asset tag >")
-                    description = input("Enter description >")
+                    description = input("Enter descrition >")
                     opticalzoom = int(input("Enter optical zoom >"))
-
                     result = self.inventory.addCamera(assetTag, description, opticalzoom)
-
                     if result:
-                        print("Digital camera added")
+                        print("Digital camera added.")
                     else:
-                        print("Error adding digital camera")
-
-                elif option == OPTION_LAPTOP:
+                        print("Error adding digital camera.")
+                
+                elif option == 2:
                     assetTag = input("Enter asset tag >")
-                    description = input("Enter description >")
-                    os = input("Enter OS >")
-
+                    description = input("Enter descrition >")
+                    os = input("Enter os >")
                     result = self.inventory.addLaptop(assetTag, description, os)
-
                     if result:
                         print("Laptop added.")
                     else:
-                        print("Error adding laptop.")
+                        print("Error adding laptop.") 
                 else:
                     print("Invalid item type.")
 
-            elif choice == CHOICE_VIEW:
+            elif choice == 2:
                 # Refactor (B): Extract duplicate codes to printHeader(message)
                 print("")
                 print("==============================================")
                 print("Display all items")
                 print("==============================================")
+
+                # TO-DO: Write the code to display all digital camera or laptop.
                 print(self.inventory.getAvailableCamera())
                 print(self.inventory.getAvailableLaptop())
                 
-            elif choice == CHOICE_LOAN:
+            elif choice == 3:
                 # Refactor (B): use printHeader(mesage)
                 print("")
                 print("==============================================")
@@ -100,7 +91,8 @@ class ResourceCenter:
                 print("2. Laptop")
                 option = int(input("Enter option to select item type >"))
 
-                if option == OPTION_CAMERA:
+                # TO-DO: Write the code to LOAN a camcorder or chrome book
+                if option == 1:
                     print(self.inventory.getAvailableCamera())
                     assetTag = input("Enter asset tag >")
                     duedate = input("Enter due date >")
@@ -111,7 +103,7 @@ class ResourceCenter:
                         print("Camera",assetTag,"successfully loaned out.")
                     else:
                         print("Error loaning camera.")
-                elif option == OPTION_LAPTOP:
+                elif option == 2:
                     print(self.inventory.getAvailableLaptop())
                     assetTag = input("Enter asset tag >")
                     duedate = input("Enter due date >")
@@ -124,9 +116,7 @@ class ResourceCenter:
                         print("Error loaning laptop.")
                 else:
                     print("Invalid item type.")
-
-                
-            elif choice == CHOICE_RETURN:
+            elif choice == 4:
                 # Refactor (B): use printHeader(mesage)
                 print("")
                 print("==============================================")
@@ -139,7 +129,8 @@ class ResourceCenter:
                 print("2. Laptop")
                 option = int(input("Enter option to select item type >"))
 
-                if option == OPTION_CAMERA:
+                # TO-DO: Write the code to RETURN a camcorder or chrome book
+                if option == 1:
                     # Refactor (F): create and use proper method to display loaned camera.
                     # Don't forget to create a pytest for this new method.
                     print("{:<10}{:<30}{:<10}{:<12}{:<10}".format("AssetTag", 
@@ -157,7 +148,7 @@ class ResourceCenter:
                         print("Camera",assetTag,"successfully returned.")
                     else:
                         print("Error returning camera.")
-                elif option == OPTION_LAPTOP:
+                elif option == 2:
                     # Refactor (F): create and use proper method to display loaned Laptop.
                     # Don't forget to create a pytest for this new method.
                     print("{:<10}{:<30}{:<10}{:<12}{:<10}".format("AssetTag", 
@@ -177,8 +168,6 @@ class ResourceCenter:
                         print("Error returning laptop.")
                 else:
                     print("Invalid item type.")
-
-
             else:
                 print("Invalid choice.")
             

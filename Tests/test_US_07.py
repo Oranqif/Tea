@@ -1,4 +1,6 @@
-from Inventory.inventory import Inventory
+# In Tests/test_US_01.py and other test files
+from inventory.inventory import Inventory
+
 
 class Test_US_07:
     ############### Test return camera ######################
@@ -69,4 +71,4 @@ class Test_US_07:
         
         result = test_inventory.returnLaptop("L003")
         
-        assert result == False
+        assert result == False  

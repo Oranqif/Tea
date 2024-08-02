@@ -1,6 +1,6 @@
-from Inventory.inventory import Inventory
-
+from inventory.inventory import Inventory
 class Test_US_04:
+        ############### Test view camera ######################
     def test_view_empty_camera_list(self):
         test_inventory = Inventory()
 

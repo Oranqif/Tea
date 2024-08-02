@@ -1,100 +1,71 @@
-from Inventory.inventory import Inventory
-
-class Test_US_06:
-   ############### Test loan camera ######################
-    def test_loan_an_available_camera(self):
+from inventory.inventory import Inventory
+ 
+class Test_US_01:
+    ############### Test add camera ######################
+    def test_add_camera(self):
+        test_inventory = Inventory()
+        assert len(test_inventory.cameraList) == 0
+        result = test_inventory.addCamera("C001", "Test camera 1", 5)
+        assert result == True
+        assert len(test_inventory.cameraList) == 1
+ 
+    def test_add_existing_camera(self):
         test_inventory = Inventory()
         result = test_inventory.addCamera("C001", "Test camera 1", 5)
         result = test_inventory.addCamera("C002", "Test camera 2", 10)
-
-        tested_camera = test_inventory.cameraList[0]
-        result = test_inventory.loanCamera(tested_camera.getAssetTag(), "08-08-2030")
-        
-        assert result == True
-        assert tested_camera.getDueDate() == "08-08-2030"
-        assert tested_camera.getIsAvailable() == "No"
-
-    def test_loan_an_unavailable_camera(self):
+        original_len = len(test_inventory.cameraList)
+        result = test_inventory.addCamera("C002", "Test camera 2", 10)
+        assert result == False
+        assert len(test_inventory.cameraList) == original_len
+ 
+    def test_add_camera_missing_description(self):
         test_inventory = Inventory()
         result = test_inventory.addCamera("C001", "Test camera 1", 5)
         result = test_inventory.addCamera("C002", "Test camera 2", 10)
-        tested_camera = test_inventory.cameraList[0]
-        result = test_inventory.loanCamera(tested_camera.getAssetTag(), "08-08-2030")
-        original_date = tested_camera.getDueDate()
-        assert result == True
-
-        result2 = test_inventory.loanCamera(tested_camera.getAssetTag(), "01-01-2050")
-
-        assert result2 == False
-        assert tested_camera.getDueDate() == original_date
-        assert tested_camera.getIsAvailable() == "No"
-
-    def test_loan_not_exists_camera(self):
+        original_len = len(test_inventory.cameraList)
+        result = test_inventory.addCamera("C004", "", 10)
+        assert result == False
+        assert len(test_inventory.cameraList) == original_len
+ 
+    def test_add_camera_incorrect_zoom(self):
         test_inventory = Inventory()
         result = test_inventory.addCamera("C001", "Test camera 1", 5)
         result = test_inventory.addCamera("C002", "Test camera 2", 10)
-
-        result = test_inventory.loanCamera("CC0016", "08-08-2030")
-
+        original_len = len(test_inventory.cameraList)
+        result = test_inventory.addCamera("C004", "Test camera 4", -1)
         assert result == False
-
-    def test_loan_camera_with_missing_details(self):
+        assert len(test_inventory.cameraList) == original_len
+    ############### Test add laptop ######################
+    def test_add_laptop(self):
         test_inventory = Inventory()
-        result = test_inventory.addCamera("C001", "Test camera 1", 5)
-        result = test_inventory.addCamera("C002", "Test camera 2", 10)
-        tested_camera = test_inventory.cameraList[0]
-
-        result = test_inventory.loanCamera(tested_camera.getAssetTag(), "")
-
-        assert result == False
-        assert tested_camera.getDueDate() == ""
-        assert tested_camera.getIsAvailable() == "Yes"
-
-    ############### Test loan laptop ######################
-    def test_loan_an_available_laptop(self):
-        test_inventory = Inventory()
+        assert len(test_inventory.laptopList) == 0
         result = test_inventory.addLaptop("L001", "Test Laptop 1", "WINXP")
-        result = test_inventory.addLaptop("L002", "Test Laptop 2", "MACOS")
-
-        tested_laptop = test_inventory.laptopList[0]
-        result = test_inventory.loanLaptop(tested_laptop.getAssetTag(), "08-08-2030")
-
         assert result == True
-        assert tested_laptop.getDueDate() == "08-08-2030"
-        assert tested_laptop.getIsAvailable() == "No"
-
-    def test_loan_an_unavailable_laptop(self):
+        assert len(test_inventory.laptopList) == 1
+ 
+    def test_add_existing_laptop(self):
         test_inventory = Inventory()
         result = test_inventory.addLaptop("L001", "Test Laptop 1", "WINXP")
         result = test_inventory.addLaptop("L002", "Test Laptop 2", "MACOS")
-        tested_laptop = test_inventory.laptopList[0]
-        result = test_inventory.loanLaptop(tested_laptop.getAssetTag(), "08-08-2030")
-        original_date = tested_laptop.getDueDate()
-        assert result == True
-
-        result2 = test_inventory.loanLaptop(tested_laptop.getAssetTag(), "01-01-2050")
-        
-        assert result2 == False
-        assert tested_laptop.getDueDate() == original_date
-        assert tested_laptop.getIsAvailable() == "No"
-
-    def test_loan_not_exists_laptop(self):
-        test_inventory = Inventory()
-        result = test_inventory.addLaptop("L001", "Test Laptop 1", "WINXP")
+        original_len = len(test_inventory.laptopList)
         result = test_inventory.addLaptop("L002", "Test Laptop 2", "MACOS")
-
-        result = test_inventory.loanLaptop("CB0016", "08-08-2030")
-
         assert result == False
-
-    def test_loan_laptop_with_missing_details(self):
+        assert len(test_inventory.laptopList) == original_len
+ 
+    def test_add_laptop_missing_description(self):
         test_inventory = Inventory()
         result = test_inventory.addLaptop("L001", "Test Laptop 1", "WINXP")
         result = test_inventory.addLaptop("L002", "Test Laptop 2", "MACOS")
-        tested_laptop = test_inventory.laptopList[0]
-
-        result = test_inventory.loanLaptop(tested_laptop.getAssetTag(), "")
-
+        original_len = len(test_inventory.laptopList)
+        result = test_inventory.addLaptop("L004", "", "WIN10")
         assert result == False
-        assert tested_laptop.getDueDate() == ""
-        assert tested_laptop.getIsAvailable() == "Yes"
+        assert len(test_inventory.laptopList) == original_len
+ 
+    def test_add_laptop_missing_os(self):
+        test_inventory = Inventory()
+        result = test_inventory.addLaptop("L001", "Test Laptop 1", "WINXP")
+        result = test_inventory.addLaptop("L002", "Test Laptop 2", "MACOS")
+        original_len = len(test_inventory.laptopList)
+        result = test_inventory.addLaptop("L004", "Test Laptop 4", "")
+        assert result == False
+        assert len(test_inventory.laptopList) == original_len
