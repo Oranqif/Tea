@@ -140,5 +140,48 @@ class Inventory():
                         success = True
         
         return success
+    
+    # joshua
+    def findAsset(self, assetTag):
+        for item in self.cameraList + self.laptopList:
+            if item.getAssetTag() == assetTag:
+                return item
+        return None
+    
+    def getNotAvailableCamera(self):
+        output = "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format(
+            "AssetTag", "Description", "Available", "Due Date", "Zoom"
+        )
+        found = False
+        for camera in self.cameraList:
+            if camera.getIsAvailable() == "No":
+                output += "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format(
+                    camera.getAssetTag(), camera.getDescription(),
+                    camera.getIsAvailable(), camera.getDueDate(), camera.getOpticalZoom()
+                )
+                found = True
+        if not found:
+            output += "There is no camera to display."
+        return output
+
+    def getNotAvailableLaptop(self):
+        output = "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format(
+            "AssetTag", "Description", "Available", "Due Date", "OS"
+        )
+        found = False
+        for laptop in self.laptopList:
+            if laptop.getIsAvailable() == "No":
+                output += "{:<10}{:<30}{:<10}{:<12}{:<10}\n".format(
+                    laptop.getAssetTag(), laptop.getDescription(),
+                    laptop.getIsAvailable(), laptop.getDueDate(), laptop.getOS()
+                )
+                found = True
+        if not found:
+            output += "There is no laptop to display."
+        return output
+    
+    
+    
+    # for joshua (code written by saricha for joshua's part)
 
 
